@@ -746,11 +746,18 @@ screen and (max-height: 480px) and (orientation: landscape) {
 	animation: overlay-anim 5s linear;
 }
 
-body {
+html, body {
 	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+	background: black;
 	overflow: hidden;
-        cursor: url('../shapeshiftos-media/left_ptr_1.png'), auto;
-     }
+}
+
+body {
+	cursor: url('../shapeshiftos-media/left_ptr_1.png'), auto;
+}
 /*
       _  ____      ____   ______  ________  
      / \|_  _|    |_  _|.' ___  ||_   __  | 
@@ -763,6 +770,13 @@ body {
 .shapeshiftos-content {
 	width: 100%;
 	height: 100%;
+	background: black;
+	min-height: 100vh;
+	position: relative;
+}
+
+.shapeshiftos-overlay {
+	display: none;
 }
 
 .shapeshiftos-tube-border {
@@ -799,8 +813,12 @@ screen and (max-height: 480px) and (orientation: landscape) {
 	color: white;
 	text-align: center;
 	overflow: hidden;
-	height: 100%;
-	width: 100%;
+	height: 100vh;
+	width: 100vw;
+	position: fixed;
+	top: 0;
+	left: 0;
+	min-height: 100%;
 }
 
 .shapeshiftos-tube-shape::after {
@@ -1720,6 +1738,13 @@ screen and (max-height: 480px) and (orientation: landscape) {
   grid-template-rows: repeat(2, 1fr);
   height: 100%;
   width: 100%;
+  row-gap: 0;
+}
+
+@media screen and (min-width: 481px) {
+  .home-options {
+    grid-template-rows: 1fr 0.7fr;
+  }
 }
 
 .home-options-shop,
@@ -1740,6 +1765,13 @@ screen and (max-height: 480px) and (orientation: landscape) {
   cursor: url('../shapeshiftos-media/pointer.png'), pointer;
   padding: 25px;
   flex: 1;
+}
+
+@media screen and (min-width: 481px) {
+  .home-options-about,
+  .home-options-contact {
+    margin-top: -40px;
+  }
 }
 
 .home-options-wrapper {
