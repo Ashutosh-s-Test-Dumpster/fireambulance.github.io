@@ -17,11 +17,13 @@
 @font-face {
 	font-family: 'varsity';
 	src: url('https://dwvo2npct47gg.cloudfront.net/fonts/varsity.ttf');
+	font-display: swap;
 }
 
 @font-face {
 	font-family: 'press-start';
 	src: url('../shapeshiftos-media/fonts/press-start.ttf');
+	font-display: swap;
 }
 
 @keyframes blinker {

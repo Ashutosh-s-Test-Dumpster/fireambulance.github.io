@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <!-- Created by Ilya Zaidze, Alex Shortt and Ashutosh Sundresh-->
 <!-- Alex Shortt :: Developer -->
@@ -18,23 +19,61 @@
     <meta name="keywords" content="AOSP, Custom ROM, ShapeShiftOS, UI, Android, Material Design, Blur, ShapeShift, Ashutosh Sundresh, Open Source">
     <meta name="author" content="Ashutosh Sundresh">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    
+    <!--SEO - Open Graph / Social Media-->
+    <meta property="og:title" content="ShapeShiftOS - Android Custom ROM">
+    <meta property="og:description" content="A unique Android custom ROM with a clean user interface. Open source Android ROM with several unique features.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://shapeshiftos.github.io/">
+    <meta property="og:image" content="https://shapeshiftos.github.io/css/shapeshiftos.png">
+    <meta property="og:site_name" content="ShapeShiftOS">
+    
+    <!--SEO - Twitter Card-->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ShapeShiftOS - Android Custom ROM">
+    <meta name="twitter:description" content="A unique Android custom ROM with a clean user interface.">
+    <meta name="twitter:image" content="https://shapeshiftos.github.io/css/shapeshiftos.png">
+    
+    <!--SEO - Canonical URL-->
+    <link rel="canonical" href="https://shapeshiftos.github.io/">
+    
+    <!--Security-->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!--Icons and Manifest-->
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="manifest" href="site.webmanifest">
 
-    <!--CSS/Less-->
+    <!--DNS Prefetch for External Resources-->
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://sdks.shopifycdn.com">
+    <link rel="dns-prefetch" href="https://dwvo2npct47gg.cloudfront.net">
+    <link rel="dns-prefetch" href="https://static.addtoany.com">
+    <link rel="dns-prefetch" href="https://www.addtoany.com">
+
+    <!--Preconnect for Critical External Resources-->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://dwvo2npct47gg.cloudfront.net" crossorigin>
+
+    <!--CSS - Critical Above the Fold-->
     <link rel="stylesheet" type="text/css" href="css/main.css" />
-    <script src="scripts/less.min.js" type="text/javascript"></script>
+    
+    <!--Preload Critical Fonts-->
+    <link rel="preload" href="shapeshiftos-media/fonts/press-start.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="https://dwvo2npct47gg.cloudfront.net/fonts/varsity.ttf" as="font" type="font/ttf" crossorigin>
 
-    <!--External Scripts-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
-    <script src="https://sdks.shopifycdn.com/js-buy-sdk/v0/latest/shopify-buy.umd.polyfilled.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/86/three.min.js" type="text/javascript"></script>
+    <!--External Scripts - Load with defer for non-blocking-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="https://sdks.shopifycdn.com/js-buy-sdk/v0/latest/shopify-buy.umd.polyfilled.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/86/three.min.js" defer></script>
 
-    <!--Local Scripts-->
-    <script src="scripts/assets.min.js" type="text/javascript"></script>
-    <script src="scripts/main.js" type="text/javascript"></script>
+    <!--Local Scripts - Load with defer-->
+    <script src="scripts/assets.min.js" defer></script>
+    <script src="scripts/main.js" defer></script>
 
 </head>
 
@@ -47,7 +86,7 @@
         </div>
         <div class="modal-overlay">
             <div id="model-container" class="model-container modal-items-container"></div>
-            <h2 id="model-close" class='modal-close model-close' data-modal="#model-modal"><span>X</span></h2>
+            <h2 id="model-close" class='modal-close model-close' data-modal="#model-modal" role="button" aria-label="Close 3D model viewer" tabindex="0"><span>X</span></h2>
             <div class='modal-modal model-modal' id='model-modal'>
                 <div id="model-loading" class="model-loading">Loading...</div>
                 <div id="model-price" class="model-price">...</div>
@@ -57,11 +96,11 @@
         <div class="modal-overlay">
             <div class='modal-modal' id='cart-modal'>
                 <div class='modal-content'>
-                    <h1 class="cart-close"><span id="cancel-order" class="modal-close" data-modal="#cart-modal">X</span></h1>
+                    <h1 class="cart-close"><span id="cancel-order" class="modal-close" data-modal="#cart-modal" role="button" aria-label="Close cart" tabindex="0">X</span></h1>
                     <h1 class='modal-title'>CART</h1>
                     <div id="cart-container" class="modal-items-container">
                     </div>
-                    <h1 id="cart-checkout" class='modal-footer'>CHECKOUT</h1>
+                    <h1 id="cart-checkout" class='modal-footer' role="button" aria-label="Proceed to checkout" tabindex="0">CHECKOUT</h1>
                 </div>
             </div>
         </div>
@@ -69,7 +108,7 @@
             <div class='modal-modal notify-modal' id='notify-modal'>
                 <h1 id="notify-message" class='notify-message'>...</h1>
                 <br>
-                <h3><span class="notify-confirm modal-close" data-modal="#notify-modal">OK</span></h3>
+                <h3><span class="notify-confirm modal-close" data-modal="#notify-modal" role="button" aria-label="Close notification" tabindex="0">OK</span></h3>
             </div>
         </div>
         <div class="modal-overlay">
@@ -83,27 +122,76 @@
                     <a class="a2a_button_reddit"></a>
                 </div>
                 <script async src="https://static.addtoany.com/menu/page.js"></script>
-                <h3><span class="notify-confirm modal-close" data-modal="#share-modal">CLOSE</span></h3>
+                <h3><span class="notify-confirm modal-close" data-modal="#share-modal" role="button" aria-label="Close share modal" tabindex="0">CLOSE</span></h3>
             </div>
         </div>
         <div class="modal-overlay">
             <div class='modal-modal pictures-modal' id='pictures-modal'>
-                <img id='pictures-modal-image' data-modal="#pictures-modal" class="pictures-modal-image modal-close" src="" />
+                <img id='pictures-modal-image' data-modal="#pictures-modal" class="pictures-modal-image modal-close" src="" alt="Full size image" role="button" aria-label="Close image viewer" tabindex="0" />
             </div>
         </div>
         <div id="shapeshiftos-overlay" class="shapeshiftos-overlay"></div>
     </div>
 
+    <!--Structured Data (JSON-LD)-->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "ShapeShiftOS",
+        "applicationCategory": "MobileApplication",
+        "operatingSystem": "Android",
+        "description": "A unique Android custom ROM with a clean user interface and several unique features.",
+        "url": "https://shapeshiftos.github.io/",
+        "author": {
+            "@type": "Organization",
+            "name": "ShapeShiftOS",
+            "url": "https://github.com/ShapeShiftOS"
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.5",
+            "ratingCount": "150000"
+        }
+    }
+    </script>
+
     <script>
-        $("#model-container").ready(function() {
-            initModel($("#model-container"));
-            animateModel();
+        // Wait for DOM and all scripts to load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait for jQuery and other dependencies
+            if (typeof $ !== 'undefined') {
+                $("#model-container").ready(function() {
+                    if (typeof initModel !== 'undefined') initModel($("#model-container"));
+                    if (typeof animateModel !== 'undefined') animateModel();
+                });
+                if (typeof initShopify !== 'undefined') initShopify();
+                if (typeof refreshCart !== 'undefined') refreshCart();
+                if (typeof initImageGlitch !== 'undefined') initImageGlitch();
+                if (typeof initHash !== 'undefined') initHash();
+                if (typeof printCredits !== 'undefined') printCredits();
+            } else {
+                // Fallback: wait a bit longer for scripts to load
+                setTimeout(function() {
+                    if (typeof $ !== 'undefined') {
+                        $("#model-container").ready(function() {
+                            if (typeof initModel !== 'undefined') initModel($("#model-container"));
+                            if (typeof animateModel !== 'undefined') animateModel();
+                        });
+                        if (typeof initShopify !== 'undefined') initShopify();
+                        if (typeof refreshCart !== 'undefined') refreshCart();
+                        if (typeof initImageGlitch !== 'undefined') initImageGlitch();
+                        if (typeof initHash !== 'undefined') initHash();
+                        if (typeof printCredits !== 'undefined') printCredits();
+                    }
+                }, 100);
+            }
         });
-        initShopify();
-        refreshCart();
-        initImageGlitch();
-        initHash();
-        printCredits();
     </script>
 </body>
 

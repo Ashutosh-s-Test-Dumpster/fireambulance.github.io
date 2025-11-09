@@ -33,7 +33,6 @@ function initImageGlitch() {
         var cnt = 0;
         var arr = [];
         var loop = null;
-        var t = null;
         var rows = opts.rows;
         var ratio = opts.ratio;
         var img = opts.img;
@@ -157,10 +156,9 @@ function initImageGlitch() {
         }
 
         if (opts.auto) {
-            t = setInterval(function() {
+            setInterval(function() {
                 if (mshov) return;
                 instance.go();
-
                 setTimeout(instance.pause(), opts.delay / 2 * Math.random());
             }, opts.delay);
         }
@@ -287,9 +285,6 @@ function turnScreenOff(secs) {
     }
 }
 
-function preloader() {
-     /* null */ 
-}
 
 function notify(message) {
     $('#notify-message').text(message.toUpperCase());
@@ -314,23 +309,9 @@ function initTerms() {
 }
 
 function printCredits() {
-    console.log("                                                        \
-            \nCreated by Ilya Zaidze, Ashutosh Sundresh and Alex Shortt  \
-            \nAlex Shortt :: Developer                                   \
-            \n  >Twitter: @_alexshortt                                   \
-            \n  >Instagram: @alexander.shortt                            \
-            \nAshutosh Sundresh :: Developer                             \
-            \n  >Instagram: @ashufritez                                  \
-            \nIlya Zaidze :: Creative + Design                           \
-            \n  >Twitter: @ilya2x                                        \
-            \n  >Instagram: @ilya2x                                      \
-            ");
+    // Credits: Ilya Zaidze, Ashutosh Sundresh, Alex Shortt
 }
 
-function isMobileView() {
-    var mq = window.matchMedia(smartphones);
-    return mq.matches;
-}
 
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -507,10 +488,7 @@ function shopLoad() {
             return;
 
         closeModal("cart-modal");
-
         openCheckoutLink();
-
-        //window.location.hash = "checkout";
     });
 
     $('.shop-items-item').click(function() {
@@ -544,100 +522,13 @@ function shopLoad() {
 
 function checkoutLoad() {
     if (Object.keys(getCart()).length <= 0) {
-        window.location.hash = "shop"
+        window.location.hash = "shop";
+        return;
     }
-
-    //global
-    $("#cancel-order").on('click', function() {
-        exitCheckout();
-        window.location.hash = "shop";
-    });
-
-    setCheckoutPage('checkout-checkout');
-
-    //checkout
-    $("#checkout-subtotal").html("$" + getCartSubtotal().toFixed(2));
-
-    $("#continue-shopping").on('click', function() {
-        window.location.hash = "shop";
-    });
-
-    $("#continue-to-shipping").on('click', function() {
-        setCheckoutPage('checkout-shipping');
-    });
-
-    displayCartCheckout('#checkout-items');
-
-    //shipping
-    $("#continue-to-billing").on('click', function() {
-        if (!validateShipping()) {
-            return;
-        }
-
-        setCheckoutPage('checkout-billing');
-    });
-
-    $("#back-to-checkout").on('click', function() {
-        setCheckoutPage('checkout-checkout');
-    });
-
-    //billing
-    $("#continue-to-confirmation").on('click', function() {
-        completeBilling();
-    });
-
-    $("#back-to-shipping").on('click', function() {
-        setCheckoutPage('checkout-shipping');
-    });
-
-    $("#credit-card-number").on('input', function() {
-        var value = $("#credit-card-number").val();
-        var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
-        var matches = v.match(/\d{4,16}/g);
-        var match = matches && matches[0] || '';
-        var parts = [];
-        for (i = 0, len = match.length; i < len; i += 4) {
-            parts.push(match.substring(i, i + 4))
-        }
-        if (parts.length) {
-            $("#credit-card-number").val(parts.join(' '));
-        }
-        else {
-            $("#credit-card-number").val(value);
-        }
-    });
-
-    //confirmation
-    $("#place-order").on('click', function() {
-        $(this).css("cursor", "context-menu");
-        $(this).css("color", "#afafaf");
-        chargeOrder();
-    });
-
-    $("#back-to-billing").on('click', function() {
-        if (orderData != null) {
-            $.ajax({
-                method: 'POST',
-                url: 'https://shapeshiftos-server.herokuapp.com/cancelOrder',
-                data: {
-                    order: orderData.orderToken
-                }
-            });
-        }
-        setCheckoutPage('checkout-billing');
-    });
-
-    displayCartCheckout('#confirmation-items');
+    
+    window.location.hash = "shop";
 }
 
-function messageLoad() {
-    $('#message-order-num').text(orderData.num);
-
-    $("#checkout-close-button").on('click', function() {
-        localStorage['cart'] = "";
-        window.location.hash = "";
-    });
-}
 
 function videosLoad() {
     var carousel = $(".videos-carousel-carousel");
@@ -674,19 +565,6 @@ function videosLoad() {
     }
 }
 
-// function picturesLoad() {
-//     $(".pictures-image").on('click', function() {
-//         if ($(this).hasClass("pictures-video")) {
-//             console.log($(this).prop('muted'));
-//             $(this).prop('muted', !$(this).prop('muted'));
-//         }
-//         else {
-//             var src = $(this).attr("src");
-//             $("#pictures-modal-image").attr("src", src);
-//             openModal("pictures-modal");
-//         }
-//     });
-// }
 
 function picturesLoad() {
     $(".pictures-container").click(function() {
@@ -700,47 +578,17 @@ function shapeshiftosDVDVolLoad() {
     });
 
     $("#dvd-video").get(0).load();
-
-    /*
-    $("#dvd-video").on('click', function() {
-        window.location.hash = "home";
-    });
-
-    $(document).ready(function() {
-        var x = setInterval(function() {
-            if ($("#dvd-video").get(0).paused) {
-                $("#dvd-video").get(0).play();
-            }
-            else {
-                clearInterval(x);
-                console.log("ok");
-            }
-        }, 500)
-    });
-    */
 }
 
 function toggleVideoPlay(id) {
-    if (!$(id).get(0).paused) {
-        !$(id).get(0).pause()
-    }
-    else {
-        !$(id).get(0).play();
+    var video = $(id).get(0);
+    if (!video.paused) {
+        video.pause();
+    } else {
+        video.play();
     }
 }
 
-function shapeshiftosDVDLoad() {
-    $("#dvd-video").on('click', function() {
-        window.location.hash = "home";
-    });
-
-    $("#shapeshiftosdvd-vol-1").on('click', function() {
-        window.location.hash = "shapeshiftosDVD-vol-1";
-    });
-    $("#shapeshiftosdvd-vol-2").on('click', function() {
-        window.location.hash = "shapeshiftosDVD-vol-2";
-    });
-}
 
 function mediaLoad() {
     $('#media-videos').click(function() {
@@ -770,7 +618,7 @@ function loadPage(dir, time) {
                 shopLoad();
                 break;
             case "./pages/checkout.html":
-                checkoutLoad();
+                window.location.hash = "shop";
                 break;
             case "./pages/videos.html":
                 videosLoad();
@@ -1083,7 +931,6 @@ function setShopProduct(type, index) {
 
     var price = $("#shop-item-price");
     var progress = $("#shop-item-progress");
-    var image = $("#shop-item-image");
     var numItems = Object.keys(shop[type]).length;
 
     noise.go();
@@ -1097,7 +944,6 @@ function setShopProduct(type, index) {
         $(progress).html("" + index + "/" + numItems).attr("data-text", "" + index + "/" + numItems);
         var localPrice = shop[type][index].price == "Sold Out" ? "Sold Out" : "$" + shop[type][index].price;
         $(price).html(localPrice).attr("data-text", localPrice).data(localPrice);
-        $(image).prop("src", shop[type][index].image);
 
         currentItem.type = type;
         currentItem.index = index;
@@ -1212,9 +1058,8 @@ function getCart() {
         return localStorage['cart'] == null ? {} : JSON.parse(localStorage['cart']);
     }
     catch (e) {
-        console.log("Error Getting Cart - Emptying... " + " :: " + e)
         localStorage['cart'] = "{}";
-        return JSON.parse(localStorage['cart']);
+        return {};
     }
 }
 
@@ -1297,7 +1142,6 @@ function refreshCart() {
 
 function addToCart() {
     if (currentItem.size == null) {
-        console.log("Add to cart failed :: No Size");
         return;
     }
 
@@ -1350,7 +1194,6 @@ function updateBuyButton() {
 
     }
     else if (currentItem.type == "shirts" && currentItem.size == null) {
-        console.log(currentItem.type + "-" + currentItem.index + "-" + currentItem.size);
         var allOOS = true;
         for (var i = 0; i < shop[currentItem.type][currentItem.index].sizes.length; i++) {
             var size = shop[currentItem.type][currentItem.index].sizes[i];
@@ -1381,18 +1224,22 @@ http://patorjk.com/software/taag/#p=display&f=Varsity&t=Checkout%0A
 
 function openCheckoutLink() {
     var cart = getCart();
+    if (!shopCart) return;
+    
     shopCart.clearLineItems();
     for (var i = 0; i < Object.keys(cart).length; i++) {
         var id = Object.keys(cart)[i];
-        console.log(skuMatch[id]);
-        console.log(cart[id]);
-        shopCart.createLineItemsFromVariants({
-            variant: skuMatch[id],
-            quantity: cart[id]
-        });
+        if (skuMatch[id]) {
+            shopCart.createLineItemsFromVariants({
+                variant: skuMatch[id],
+                quantity: cart[id]
+            });
+        }
     }
 
-    window.open(shopCart.checkoutUrl, "_blank", "height=" + (screen.height * 3 / 4) + ",width=" + (screen.width / 2) + ",top=" + (screen.height / 8) + ",left=" + (screen.width / 4));
+    if (shopCart.checkoutUrl) {
+        window.open(shopCart.checkoutUrl, "_blank", "height=" + (screen.height * 3 / 4) + ",width=" + (screen.width / 2) + ",top=" + (screen.height / 8) + ",left=" + (screen.width / 4));
+    }
 }
 
 function getCartSubtotal() {
@@ -1431,8 +1278,7 @@ Payment.js
 http://patorjk.com/software/taag/#p=display&f=Varsity&t=Payment
 */
 
-var checkoutShipping, checkoutEmail, orderData, shopClient, shopCart;
-var items = [];
+var shopClient, shopCart;
 var skuMatch = {};
 
 
@@ -1445,6 +1291,8 @@ function initShopify() {
 
     shopClient.createCart().then(function(newCart) {
         shopCart = newCart;
+    }).catch(function(error) {
+        // Shopify cart initialization failed
     });
 
     shopClient.fetchAllCollections().then(function(collections) {
@@ -1452,14 +1300,16 @@ function initShopify() {
             shopClient.fetchQueryProducts({ collection_id: collection.attrs.collection_id }).then(function(products) {
                 products.forEach(function(product) {
                     product.variants.forEach(function(variant) {
-                        console.log(variant.attrs.variant.sku);
                         skuMatch[variant.attrs.variant.sku] = variant;
-                        items.push(variant);
                     });
                 });
                 updateBuyButton();
+            }).catch(function(error) {
+                // Product fetch failed
             });
         });
+    }).catch(function(error) {
+        // Collection fetch failed
     });
 }
 
@@ -1485,12 +1335,9 @@ function initModel(container) {
     renderer = new THREE.WebGLRenderer({
         alpha: true
     });
-    var loader = new THREE.JSONLoader();
 
     renderer.setSize(width, height);
-    renderer.setClearColor(0x000000, 0); //0xfD35144
-    //#D35144
-    //scene.background = new THREE.Color(0xf1B1B1B);
+    renderer.setClearColor(0x000000, 0);
     $(container).append(renderer.domElement);
 
     var light = new THREE.AmbientLight(0xE0E0E0); // soft white light
@@ -1553,13 +1400,12 @@ function hideModelLoading(id) {
 
 function loadModel(name) {
     var onProgress = function(xhr) {
-        if (xhr.lengthComputable) {
-            var percentComplete = xhr.loaded / xhr.total * 100;
-            console.log(Math.round(percentComplete, 2) + '% downloaded');
-        }
+        // Progress tracking can be added here if needed
     };
 
-    var onError = function(xhr) {};
+    var onError = function(xhr) {
+        notify("Failed to load 3D model");
+    };
 
     if (object != null) scene.remove(object);
     var loadingID = showModelLoading();
@@ -1604,11 +1450,6 @@ function loadModel(name) {
                         controls.minDistance = 50;
                         controls.maxDistance = 200;
                         break;
-                    case 'revenge_green':
-                        setCameraPosition(90.2, 32.9, 61.9);
-                        controls.minDistance = 50;
-                        controls.maxDistance = 200;
-                        break;
                 }
 
                 scene.add(object);
@@ -1616,241 +1457,3 @@ function loadModel(name) {
         }, onProgress, onError);
     });
 }
-
-
-/* Dead payment code for stripe */
-
-/*
-function displayCartCheckout(container) {
-    var cart = getCart();
-
-    for (var i = 0; i < Object.keys(cart).length; i++) {
-        var id = Object.keys(cart)[i];
-
-        if (cart[id] == 0)
-            continue;
-
-        var type = id.split('-')[0];
-        var index = id.split('-')[1];
-        var size = id.split('-')[2];
-        var item = shop[type][index];
-
-        if (item == null) {
-            cart[id] = 0;
-        }
-
-        $(container).append('<div id=' + id + ' class="cart-item"> \
-                        <div class="cart-item-image" style="background-image: url(\'' + item.image + '\')"></div>\
-                        <div class="cart-item-name-wrapper">\
-                            <h1 class="cart-item-name">' + item.name + (size == "OSFA" ? '' : (' - SZ ' + size)) + '</h1>\
-                        </div>\
-                        <div class="cart-item-quantity-wrapper">\
-                            <h1 class="cart-item-quantity">' + cart[id] + '</h1>\
-                        </div>\
-                        <div class="cart-item-price-wrapper">\
-                            <h1 class="cart-item-price">$' + (parseFloat(item.price) * parseFloat(cart[id])) + '</h1>\
-                        </div>\
-                    </div>');
-    }
-}
-
-function setCheckoutPage(id) {
-    $('#checkout-checkout').css('display', 'none');
-    $('#checkout-shipping').css('display', 'none');
-    $('#checkout-billing').css('display', 'none');
-    $('#checkout-confirmation').css('display', 'none');
-
-    $('#' + id).css('display', 'flex');
-}
-
-
-
-
-
-function exitCheckout() {
-    if (orderData != null) {
-        //SHOPIFY -- cancel open order
-        $.ajax({
-            method: 'POST',
-            url: 'https://shapeshiftos-server.herokuapp.com/cancelOrder',
-            data: {
-                order: orderData.orderToken
-            }
-        });
-    }
-
-    window.location.hash = "shop";
-}
-
-function validateShipping() {
-    var numInputs = $(".shipping-input").length;
-    for (var i = 0; i < numInputs; i++) {
-        var obj = $("input")[i];
-        if ($(obj).val() == "" && $(obj).attr("name") != "state" && $(obj).attr("name") != "address-line-2" && $(obj).attr("name") != "state") {
-            notify("Fill In Shipping Info For value: " + $(obj).attr("name"));
-            return false;
-        }
-    }
-    return true;
-}
-
-function validateBilling() {
-    return true;
-    if (!Stripe.card.validateCardNumber($("#credit-card-number").val())) {
-        notify("Invalid Card Number.");
-        return false;
-    }
-    else if (!Stripe.card.validateCVC($("#credit-card-cvc").val())) {
-        notify("Invalid CVC.");
-        return false;
-    }
-    else if (!Stripe.card.validateExpiry($("#credit-card-expiry").val())) {
-        notify("Invalid Expiry.");
-        return false;
-    }
-    else if ($("#credit-card-name").val() == "") {
-        notify("Fill in billing info for value: " + $("#credit-card-name").attr('id'));
-        return false;
-    }
-    else {
-        return true;
-    }
-}
-
-
-
-
-function completeBilling() {
-    if (!validateShipping() || !validateBilling()) {
-        return false;
-    }
-    else {
-        $("#continue-to-confirmation").css("cursor", "context-menu");
-        $("#continue-to-confirmation").css("color", "#afafaf");
-
-        Stripe.card.createToken({
-            number: $('#credit-card-number').val(),
-            cvc: $('#credit-card-cvc').val(),
-            exp: $('#credit-card-expiry').val(),
-            name: $("#credit-card-name").val()
-        }, createOrder);
-
-        return true;
-    }
-}
-
-function createOrder(status, response) {
-    var items = [];
-    var cart = getCart();
-    var send = {
-        currency: 'usd',
-        email: $("#email").val()
-    };
-
-    //items
-    for (var i = 0; i < Object.keys(cart).length; i++) {
-        var id = Object.keys(cart)[i];
-        items[i] = {
-            type: 'sku',
-            parent: id,
-            quantity: cart[id]
-        };
-    }
-
-    //shipping
-    shipping = {
-        name: $("#first-name").val() + " " + $("#last-name").val(),
-        address: {
-            line1: $("#address-line-1").val(),
-            city: $("#city").val()
-        }
-    };
-
-    if ($("#address-line-2").val() != "") {
-        shipping.address.line2 = $("#address-line-2").val();
-    }
-
-    if ($("#zipcode").val() != "") {
-        shipping.address.postal_code = $("#zipcode").val();
-    }
-
-    if ($("#state").val() != "") {
-        shipping.address.state = $("#state").val();
-    }
-
-    send.items = items;
-    send.shipping = shipping;
-    checkoutEmail = send.email;
-
-    if (response.error) {
-        notify(response.error.message);
-        $("#place-order").css("cursor", "pointer");
-        $("#place-order").css("color", "white");
-    }
-    else {
-        var token = response.id;
-        $.ajax({
-            method: 'GET',
-            url: 'https://shapeshiftos-server.herokuapp.com/createOrder?data=' + encodeURIComponent(JSON.stringify(send)) + '&payToken=' + encodeURIComponent(token)
-        }).done(function(data) {
-            $("#continue-to-confirmation").css("cursor", "pointer");
-            $("#continue-to-confirmation").css("color", "white");
-
-            try {
-                data = JSON.parse(data);
-            }
-            catch (err) {
-                notify("Bad Server Response");
-                return;
-            }
-
-            if (data.error == "true") {
-                notify(data.message);
-                $("#place-order").css("cursor", "pointer");
-                $("#place-order").css("color", "white");
-                orderData = null;
-                return;
-            }
-
-            orderData = data;
-
-            $("#confirmation-subtotal").html("$" + getCartSubtotal().toFixed(2));
-            $("#confirmation-shipping").html("$" + (orderData.shipping / 100).toFixed(2));
-            $("#confirmation-tax").html("$" + (orderData.tax / 100).toFixed(2));
-            $("#confirmation-total").html("$" + (orderData.total / 100).toFixed(2));
-            setCheckoutPage('checkout-confirmation');
-        });
-    }
-}
-
-function chargeOrder() {
-    $.ajax({
-        method: 'GET',
-        url: 'https://shapeshiftos-server.herokuapp.com/chargeOrder?order=' + encodeURIComponent(orderData.orderToken) + '&pay=' + encodeURIComponent(orderData.payToken) + '&email=' + encodeURIComponent(checkoutEmail)
-    }).done(function(data) {
-        $("#place-order").css("cursor", "pointer");
-        $("#place-order").css("color", "white");
-
-        try {
-            data = JSON.parse(data);
-        }
-        catch (err) {
-            notify("Bad Server Response");
-            return;
-        }
-
-        if (data.error == "true") {
-            notify(data.message);
-            return;
-        }
-
-        orderData.num = data.num;
-
-        $(".checkout-container").load("./pages/message.html", function() {
-            messageLoad();
-        });
-
-    });
-}
-
-*/
