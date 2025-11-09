@@ -1296,14 +1296,26 @@ screen and (max-height: 480px) and (orientation: landscape) {
 	width: auto;
 }
 
+@media screen and (min-width: 481px) {
+	.landing-image {
+		height: 18vh;
+		max-width: 60vw;
+	}
+}
+
 @media screen and (max-width: 480px) and (orientation: portrait),
 screen and (max-height: 480px) and (orientation: landscape) {
+	.landing-title {
+		margin-top: -8vh;
+		align-items: center;
+	}
 	.landing-image {
 		display: block;
 		max-width: 70vw;
 		max-height: 16vh;
 		width: auto;
 		height: auto;
+		margin: 0 auto;
 	}
 }
 
@@ -1385,6 +1397,9 @@ screen and (max-height: 480px) and (orientation: landscape) {
 
 @media screen and (max-width: 480px) and (orientation: portrait),
 screen and (max-height: 480px) and (orientation: landscape) {
+	.landing-start {
+		margin-top: -4vh;
+	}
 	.landing-start-text {
 		font-size: 1em;
 	}
@@ -1402,7 +1417,8 @@ screen and (max-height: 480px) and (orientation: landscape) {
 screen and (max-height: 480px) and (orientation: landscape) {
 	.landing-copyright {
 		font-size: 0.8em;
-		margin-bottom: 10vh;
+		margin-bottom: 5vh;
+		margin-top: -2vh;
 	}
 }
 
