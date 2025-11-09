@@ -1284,10 +1284,10 @@ screen and (max-height: 480px) and (orientation: landscape) {
 }
 
 .landing-title {
-	flex: 1.5;
+	flex: 1;
 	display: flex;
 	justify-content: center;
-	align-items: flex-end;
+	align-items: center;
 	font-weight: normal;
 }
 
@@ -1306,7 +1306,6 @@ screen and (max-height: 480px) and (orientation: landscape) {
 @media screen and (max-width: 480px) and (orientation: portrait),
 screen and (max-height: 480px) and (orientation: landscape) {
 	.landing-title {
-		margin-top: -8vh;
 		align-items: center;
 	}
 	.landing-image {
@@ -1376,10 +1375,11 @@ screen and (max-height: 480px) and (orientation: landscape) {
 	color: white;
 	color: #8F00C1;
 	text-shadow: 3px 3px 4px #21285d, 0px 0px 16px rgba(191, 191, 191, 0.56);
-	flex: .5;
+	flex: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin-top: -100px;
 }
 
 .landing-start-text {
@@ -1398,7 +1398,7 @@ screen and (max-height: 480px) and (orientation: landscape) {
 @media screen and (max-width: 480px) and (orientation: portrait),
 screen and (max-height: 480px) and (orientation: landscape) {
 	.landing-start {
-		margin-top: -4vh;
+		margin-top: -60px;
 	}
 	.landing-start-text {
 		font-size: 1em;
@@ -1406,19 +1406,37 @@ screen and (max-height: 480px) and (orientation: landscape) {
 }
 
 .landing-copyright {
-	flex: .5;
+	flex: 0;
 	display: flex;
 	justify-content: center;
-	align-items: center;
-	align-items: flex-start;
+	align-items: flex-end;
+	margin-top: auto;
+	padding-bottom: 100px;
 }
 
 @media screen and (max-width: 480px) and (orientation: portrait),
 screen and (max-height: 480px) and (orientation: landscape) {
 	.landing-copyright {
 		font-size: 0.8em;
-		margin-bottom: 5vh;
-		margin-top: -2vh;
+		padding-bottom: 180px;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.landing-copyright {
+		padding-bottom: 100px !important;
+	}
+}
+
+@media screen and (max-height: 600px) and (min-width: 600px) {
+	.landing-copyright {
+		padding-bottom: 100px !important;
+	}
+}
+
+@media screen and (min-width: 601px) and (max-width: 1024px) {
+	.landing-copyright {
+		padding-bottom: 250px;
 	}
 }
 
